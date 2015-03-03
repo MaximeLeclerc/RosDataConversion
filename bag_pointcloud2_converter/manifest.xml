@@ -1,0 +1,22 @@
+<package>
+  <description brief="bag_pointcloud2_converter">
+
+     bag_pointcloud2_converter
+
+  </description>
+  <author>edminster</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/bag_pointcloud2_converter</url>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="tf"/>
+  <depend package="libpointmatcher"/>
+  <depend package="libpointmatcher_ros"/>
+  <depend package="rosbag"/>
+
+</package>
+
+
