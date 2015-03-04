@@ -29,13 +29,13 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
-rosbuild_add_executable(image_extractor
-                        src/image_extractor.cpp)
-rosbuild_add_executable(motor_currents_extractor
-                        src/motor_currents_extractor.cpp)
-rosbuild_add_executable(roll_pitch_yaw_extractor
-                        src/roll_pitch_yaw_extractor.cpp)
-rosbuild_add_executable(inertial_measurements_extractor
-                        src/inertial_measurements_extractor.cpp)
-rosbuild_add_executable(wheels_measurements_extractor
-                        src/wheels_measurements_extractor.cpp)
+rosbuild_add_executable(first_image_to_jpg
+                        src/first_image_to_jpg.cpp)
+rosbuild_add_executable(motor_currents_to_csv
+                        src/motor_currents_to_csv.cpp)
+rosbuild_add_executable(roll_pitch_yaw_to_csv
+                        src/roll_pitch_yaw_to_csv.cpp)
+rosbuild_add_executable(inertial_measurements_to_csv
+                        src/inertial_measurements_to_csv.cpp)
+rosbuild_add_executable(wheels_measurements_to_csv
+                        src/wheels_measurements_to_csv.cpp)

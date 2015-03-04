@@ -1,13 +1,13 @@
 <package>
   <description brief="bag_pointcloud2_converter">
 
-     bag_pointcloud2_converter
+     bag_data_extraction
 
   </description>
   <author>edminster</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/bag_pointcloud2_converter</url>
+  <url>http://ros.org/wiki/bag_data_extraction</url>
   <depend package="roscpp"/>
   <depend package="std_msgs"/>
   <depend package="geometry_msgs"/>
