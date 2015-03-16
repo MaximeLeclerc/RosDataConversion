@@ -199,7 +199,7 @@ def extractVelodyne(bagFile, hdf5File):
             angle = math.asin(point[1]/range)
             chunk[pointIndex, :] = (stamp, point[4], angle, range, point[3])
 
-            pointIndex += 1
+            pointIndex += 1         
 
             if pointIndex == pointsPerChunk:
                 startIndex = pointsPerChunk * chunkIndex
