@@ -11,15 +11,32 @@
 
 typedef PointMatcher<float> PM;
 using boost::shared_ptr;
-using namespace PointMatcher_ros;
-std::string appendNum(const std::string &input, const int &numSuffix);
+using PointMatcher_ros::rosMsgToPointMatcherCloud;
+using std::string;
+
+string getPaddedNum(const int &numSuffix, const int width);
 
 int main(int argc, char **argv) {
+    ros::init(argc, argv, "save_bag_pointclouds");
+    ros::NodeHandle privateNodeHandle("~");
+
+    string bagfile;
+    string path;
+    string filename;
+    string fileExtension;
+    int keepOneOutOf;
+    privateNodeHandle.param("bagfile", bagfile, string("cloud"));
+    privateNodeHandle.param("filename", path, string("cloud"));
+    privateNodeHandle.param("path", path, string("/home/smichaud/Desktop"));
+    privateNodeHandle.param("filename", filename, string("cloud"));
+    privateNodeHandle.param("fileExtension", fileExtension, string("vtk"));
+    privateNodeHandle.param("keedOneOutOf", keepOneOutOf, int(1));
+
     rosbag::Bag bag;
-    bag.open("/home/smichaud/Desktop/test/test.bag", rosbag::bagmode::Read);
+    bag.open(bagfile);
 
     std::vector<std::string> topics;
-    topics.push_back(std::string("/cloud"));
+    topics.push_back(string("/cloud"));
 
     rosbag::View view(bag, rosbag::TopicQuery(topics));
 
@@ -28,14 +45,19 @@ int main(int argc, char **argv) {
         shared_ptr<sensor_msgs::PointCloud2> cloudMsg =
             msg.instantiate<sensor_msgs::PointCloud2>();
 
+        // [TODO]: Make sure you get one out of... - 2015-05-29 05:24pm
         if(cloudMsg != NULL) {
-            shared_ptr<PM::DataPoints> cloud(new PM::DataPoints(
-                        rosMsgToPointMatcherCloud<float>(*cloudMsg)));
+            if((index+1)%keepOneOutOf == 0) {
+                std::cout << keepOneOutOf << std::endl;
+                std::cout << "Working here" << std::endl;
+                shared_ptr<PM::DataPoints> cloud(new PM::DataPoints(
+                            rosMsgToPointMatcherCloud<float>(*cloudMsg)));
 
-            std::string path = "/home/smichaud/Desktop/test/pointclouds/";
-            std::string filename = "cloud_";
-            filename = appendNum(filename, index);
-            cloud->save(path + filename + ".vtk");
+                cloud->save(path + "/" 
+                        + filename + "_" 
+                        + getPaddedNum(index, 3)
+                        + "." + fileExtension);
+            }
             index++;
         }
     }
@@ -43,9 +65,9 @@ int main(int argc, char **argv) {
     bag.close();
 }
 
-std::string appendNum(const std::string &input, const int &numSuffix) {
+string getPaddedNum(const int &numSuffix, const int width) {
     std::ostringstream output;
-    output << input << std::setfill('0') << std::setw(3) << numSuffix;
+    output << std::setfill('0') << std::setw(width) << numSuffix;
 
     return output.str();
 }
