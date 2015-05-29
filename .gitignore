@@ -29,3 +29,6 @@
 
 # Python bytecode
 *.pyc
+
+*.swp
+*.ycm_extra_conf.py
