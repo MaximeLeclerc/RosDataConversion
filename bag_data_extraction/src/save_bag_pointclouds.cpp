@@ -18,19 +18,19 @@ string getPaddedNum(const int &numSuffix, const int width);
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "save_bag_pointclouds");
-    ros::NodeHandle privateNodeHandle("~");
+    ros::NodeHandle nodeHandle("~");
 
     string bagfile;
     string path;
     string filename;
     string fileExtension;
     int keepOneOutOf;
-    privateNodeHandle.param("bagfile", bagfile, string("cloud"));
-    privateNodeHandle.param("filename", path, string("cloud"));
-    privateNodeHandle.param("path", path, string("/home/smichaud/Desktop"));
-    privateNodeHandle.param("filename", filename, string("cloud"));
-    privateNodeHandle.param("fileExtension", fileExtension, string("vtk"));
-    privateNodeHandle.param("keedOneOutOf", keepOneOutOf, int(1));
+    nodeHandle.param("bagfile", bagfile, string("cloud"));
+    nodeHandle.param("filename", path, string("cloud"));
+    nodeHandle.param("path", path, string("/home/smichaud/Desktop"));
+    nodeHandle.param("filename", filename, string("cloud"));
+    nodeHandle.param("fileExtension", fileExtension, string("vtk"));
+    nodeHandle.param("keepOneOutOf", keepOneOutOf, 1);
 
     rosbag::Bag bag;
     bag.open(bagfile);
@@ -45,11 +45,11 @@ int main(int argc, char **argv) {
         shared_ptr<sensor_msgs::PointCloud2> cloudMsg =
             msg.instantiate<sensor_msgs::PointCloud2>();
 
-        // [TODO]: Make sure you get one out of... - 2015-05-29 05:24pm
         if(cloudMsg != NULL) {
-            if((index+1)%keepOneOutOf == 0) {
-                std::cout << keepOneOutOf << std::endl;
-                std::cout << "Working here" << std::endl;
+            if(index%keepOneOutOf == 0) {
+                std::cout << index << " mod "
+                    << keepOneOutOf << " = " << index%keepOneOutOf 
+                    << std::endl;
                 shared_ptr<PM::DataPoints> cloud(new PM::DataPoints(
                             rosMsgToPointMatcherCloud<float>(*cloudMsg)));
 
