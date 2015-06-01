@@ -20,11 +20,13 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "save_bag_pointclouds");
     ros::NodeHandle nodeHandle("~");
 
+    string cloudTopic;
     string bagfile;
     string path;
     string filename;
     string fileExtension;
     int keepOneOutOf;
+    nodeHandle.param("cloudTopic", cloudTopic, string("/cloud"));
     nodeHandle.param("bagfile", bagfile, string("cloud"));
     nodeHandle.param("filename", path, string("cloud"));
     nodeHandle.param("path", path, string("/home/smichaud/Desktop"));
@@ -36,7 +38,7 @@ int main(int argc, char **argv) {
     bag.open(bagfile);
 
     std::vector<std::string> topics;
-    topics.push_back(string("/cloud"));
+    topics.push_back(cloudTopic);
 
     rosbag::View view(bag, rosbag::TopicQuery(topics));
 
@@ -47,15 +49,12 @@ int main(int argc, char **argv) {
 
         if(cloudMsg != NULL) {
             if(index%keepOneOutOf == 0) {
-                std::cout << index << " mod "
-                    << keepOneOutOf << " = " << index%keepOneOutOf 
-                    << std::endl;
                 shared_ptr<PM::DataPoints> cloud(new PM::DataPoints(
                             rosMsgToPointMatcherCloud<float>(*cloudMsg)));
 
                 cloud->save(path + "/" 
                         + filename + "_" 
-                        + getPaddedNum(index, 3)
+                        + getPaddedNum(index, 4)
                         + "." + fileExtension);
             }
             index++;
