@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     nodeHandle.param("cloudTopic", cloudTopic, string("/cloud"));
     nodeHandle.param("bagfile", bagfile, string("cloud"));
     nodeHandle.param("filename", path, string("cloud"));
-    nodeHandle.param("path", path, string("/home/smichaud/Desktop"));
+    nodeHandle.param("path", path, string("/home/maxime/Downloads"));
     nodeHandle.param("filename", filename, string("cloud"));
     nodeHandle.param("fileExtension", fileExtension, string("vtk"));
     nodeHandle.param("keepOneOutOf", keepOneOutOf, 1);
