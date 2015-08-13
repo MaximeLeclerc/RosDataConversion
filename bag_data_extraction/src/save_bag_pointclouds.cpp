@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     nodeHandle.param("filename", path, string("cloud"));
     nodeHandle.param("path", path, string("/home/maxime/Downloads"));
     nodeHandle.param("filename", filename, string("cloud"));
-    nodeHandle.param("fileExtension", fileExtension, string("vtk"));
+    nodeHandle.param("fileExtension", fileExtension, string("pcd"));
     nodeHandle.param("keepOneOutOf", keepOneOutOf, 1);
 
     rosbag::Bag bag;
